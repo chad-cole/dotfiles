@@ -1,15 +1,31 @@
 #!/usr/bin/env bash
+
 mkdir -p ~/.config/nvim/plugin
 mkdir -p ~/.config/nvim/after/plugin
 mkdir -p ~/.config/nvim/lua
 mkdir -p ~/.config/nvim/lua/thechad
+
+ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
 
 # link wholesale
 for f in `find -E . -regex ".*\.vim$|.*\.lua$"`; do
     rm -rf ~/.config/nvim/$f
     ln -s ~/dotfiles/$f ~/.config/nvim/$f
 done
-if ( -e ~/.tmux.conf)
-    rm ~/.tmux.conf
+
+# zsh setup
+ln -sf ~/dotfiles/zshrc ~/.zshrc
+if test -d ~/.oh-my-zsh; then
+    rm -rf ~/.oh-my-zsh
 fi
-ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
+git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+
+for f in `find -E . -regex ".*\.zsh$"`; do
+    ln -sf ~/dotfiles/$f ~/.oh-my-zsh/$f
+done
+
+mkdir -p /Users/chadcole/.oh-my-zsh/custom/themes
+mkdir -p /Users/chadcole/.oh-my-zsh/custom/plugins
+git clone https://github.com/denysdovhan/spaceship-prompt.git $HOME/.oh-my-zsh/custom/themes/spaceship-prompt --depth=1
+ln -s "/Users/chadcole/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "/Users/chadcole/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting

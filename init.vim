@@ -46,7 +46,6 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 Plug 'ap/vim-css-color'
-Plug 'sainnhe/gruvbox-material'
 Plug 'sbdchd/neoformat'
 
 call plug#end()
@@ -81,7 +80,7 @@ let g:signify_sign_delete = ''
 let g:signify_sign_change = ''
 
 " NERDTree
-let NERDTreeIgnore = [ '__pycache__',  '\.pyc$', '\.o$', 'node_modules/' ]
+let NERDTreeIgnore = [ '__pycache__',  '\.DS_STORE$', '\.pyc$', '\.o$', 'node_modules/' ]
 let NERDTreeShowHidden=1
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeQuitOnOpen=1
@@ -96,6 +95,8 @@ nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 nnoremap <leader>e :NERDTree<CR>
 nnoremap <silent> <M-p> :vertical resize +5<CR>
 nnoremap <silent> <M-m> :vertical resize -5<CR>
+
+set clipboard+=unnamedplus
 
 " greatest remap ever
 vnoremap <leader>p "_dP
@@ -123,6 +124,7 @@ endfun
 
 " ES
 com! W w
+com! Q q
 com! Vs vs
 com! Sp sp
 
