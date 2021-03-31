@@ -20,13 +20,24 @@ Plug 'junegunn/gv.vim'
 Plug 'mbbill/undotree'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-vinegar'
 Plug 'tweekmonster/gofmt.vim'
 Plug 'vim-utils/vim-man'
 Plug 'vuciv/vim-bujo'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'preservim/nerdtree'
+Plug 'edkolev/tmuxline.vim'
+
+" Git Plugins
+Plug 'tpope/vim-fugitive'
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+endif
 
 " Telescope requirements...
 Plug 'nvim-lua/popup.nvim'
@@ -34,6 +45,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
+Plug 'ap/vim-css-color'
 Plug 'sainnhe/gruvbox-material'
 Plug 'sbdchd/neoformat'
 
@@ -54,12 +66,34 @@ let g:netrw_winsize = 25
 
 " Airline
 let g:airline_powerline_fonts = 1
+let g:airline_theme='gruvbox'
+
+if !exists('g:airline_symbols')
+   let g:airline_symbols = {}
+endif
+let g:airline_symbols.dirty=' '
+let g:airline_symbols.notexists = ' ∄'
+let g:airline_symbols.branch = ''
+
+" Signify
+let g:signify_sign_add = ''
+let g:signify_sign_delete = ''
+let g:signify_sign_change = ''
+
+" NERDTree
+let NERDTreeIgnore = [ '__pycache__',  '\.pyc$', '\.o$', 'node_modules/' ]
+let NERDTreeShowHidden=1
+let NERDTreeAutoDeleteBuffer=1
+let NERDTreeQuitOnOpen=1
+let NERDTreeMapUpdir='-'
+let NERDTreeMapOpenSplit='s'
+let NERDTreeMapOpenVSplit='v'
 
 nnoremap <leader>ghw <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
-nnoremap <leader>e :Ex<CR>
+nnoremap <leader>e :NERDTree<CR>
 nnoremap <silent> <M-p> :vertical resize +5<CR>
 nnoremap <silent> <M-m> :vertical resize -5<CR>
 
