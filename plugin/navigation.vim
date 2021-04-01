@@ -28,7 +28,7 @@ endfun
 imap jk <Esc>
 tmap jk <Esc>
 
-if exists($TMUX)
+if exists('$TMUX')
     nnoremap <C-h> :wincmd h<CR>
     nnoremap <C-j> :wincmd j<CR>
     nnoremap <C-k> :wincmd k<CR>
