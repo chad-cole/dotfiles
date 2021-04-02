@@ -32,6 +32,7 @@ Plug 'preservim/nerdtree'
 Plug 'edkolev/tmuxline.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'mhinz/vim-startify'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
 " Git Plugins
 Plug 'tpope/vim-fugitive'
@@ -65,6 +66,11 @@ let mapleader = " "
 let g:netrw_browse_split=2
 let g:netrw_banner=0
 let g:netrw_winsize = 25
+
+" Markdown
+let g:mkdp_auto_start = 1
+let g:mkdp_auto_close = 1
+let g:mkdp_browser = 'Google Chrome'
 
 " Airline
 let g:airline_powerline_fonts = 1
