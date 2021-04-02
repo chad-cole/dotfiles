@@ -21,6 +21,8 @@ augroup MY_MINIMAL
     autocmd FileType netrw,help :call TurnOffGuides()
 augroup END
 
+autocmd BufWritePre * %s/\s\+$//e
+
 augroup TERMINAL_MINIMAL
     autocmd!
     autocmd TermOpen * startinsert
