@@ -5,7 +5,6 @@
 ### Download Dependencies (OSX)
 ```
 brew install node
-brew install npm
 brew install yarn
 brew install ruby
 ```
@@ -13,7 +12,7 @@ brew install ruby
 `./install`
 ### Download LSP Servers
 ```
-npm i -g pyright
+pip install python-language-server
 gem install solargraph
 ```
 ### Download Tree Sitter Engines
