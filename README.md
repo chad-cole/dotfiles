@@ -6,8 +6,11 @@
 ```
 brew install node
 brew install yarn
-brew install ruby
+brew install asdf
 ```
+### Install Ruby (OSX)
+ [Using ASDF](https://andrewm.codes/blog/how-to-install-ruby-on-rails-6-1-with-asdf-on-macos-big-sur)
+
 ### Run install script
 `./install`
 ### Download LSP Servers

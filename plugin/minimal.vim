@@ -21,6 +21,7 @@ augroup MY_MINIMAL
     autocmd FileType netrw,help :call TurnOffGuides()
 augroup END
 
+" Remove Trailing Whitespace
 autocmd BufWritePre * %s/\s\+$//e
 
 augroup TERMINAL_MINIMAL

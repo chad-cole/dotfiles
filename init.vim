@@ -25,14 +25,14 @@ Plug 'tpope/vim-vinegar'
 Plug 'tweekmonster/gofmt.vim'
 Plug 'vim-utils/vim-man'
 Plug 'vuciv/vim-bujo'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'preservim/nerdtree'
 Plug 'edkolev/tmuxline.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'mhinz/vim-startify'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'Shopify/shadowenv.vim'
+Plug 'Shopify/vim-sorbet'
 
 " Git Plugins
 Plug 'tpope/vim-fugitive'
@@ -41,6 +41,8 @@ if has('nvim') || has('patch-8.0.902')
 else
   Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
 endif
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Telescope requirements...
 Plug 'nvim-lua/popup.nvim'
@@ -101,7 +103,7 @@ nnoremap <leader>ghw <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
-nnoremap <leader>e :NERDTree<CR>
+nnoremap <leader>e :NERDTreeVCS<CR>
 nnoremap <silent> <M-p> :vertical resize +5<CR>
 nnoremap <silent> <M-m> :vertical resize -5<CR>
 
