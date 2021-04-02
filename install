@@ -5,6 +5,7 @@ mkdir -p ~/.config/nvim/after/plugin
 mkdir -p ~/.config/nvim/lua
 mkdir -p ~/.config/nvim/lua/thechad
 
+ln -sf ~/dotfiles/tmux ~/tmux
 ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/Xresources ~/.Xresources
 
