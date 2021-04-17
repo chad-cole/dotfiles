@@ -109,7 +109,8 @@ nnoremap <leader>ghw <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
-nnoremap <leader>e :NERDTreeVCS<CR>
+nnoremap <leader>E :NERDTreeVCS<CR>
+nnoremap <leader>e :NERDTreeFind<CR>
 nnoremap <silent> <M-p> :vertical resize +5<CR>
 nnoremap <silent> <M-m> :vertical resize -5<CR>
 
