@@ -18,4 +18,4 @@ export HISTORY_IGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 
-export LANG=en_US.utf8
+export LANG=en_US.utf-8

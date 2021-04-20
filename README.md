@@ -7,6 +7,7 @@
 brew install node
 brew install yarn
 brew install asdf
+npm install -g typescript
 ```
 ### Install Ruby (OSX)
  [Using ASDF](https://andrewm.codes/blog/how-to-install-ruby-on-rails-6-1-with-asdf-on-macos-big-sur)
@@ -15,8 +16,10 @@ brew install asdf
 `./install`
 ### Download LSP Servers
 ```
+brew install llvm
 pip install python-language-server
 gem install solargraph
+npm install typescript-language-server
 ```
 ### Download Tree Sitter Engines
 Open nvim

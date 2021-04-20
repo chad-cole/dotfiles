@@ -16,7 +16,7 @@ for f in `find -E . -regex ".*\.vim$|.*\.lua$"`; do
 done
 
 # zsh setup
-ln -sf ~/dotfiles/zshrc ~/.zshrc
+cp -f ~/dotfiles/zshrc ~/.zshrc
 if test -d ~/.oh-my-zsh; then
     rm -rf ~/.oh-my-zsh
 fi
