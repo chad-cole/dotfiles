@@ -48,3 +48,6 @@ alias jn='jupyter notebook'
 alias vim='nvim'
 alias vi='nvim'
 alias q=''
+
+# tmux
+alias stm='~/dotfiles/tmux'

@@ -31,6 +31,7 @@ nmap <Tab> :bn<CR>
 nmap <S-Tab> :bp<CR>
 nmap <leader>q :bn\|bd #<CR>
 nmap <silent> <leader>c :let @* = expand("%")<cr>
+nmap <leader>v <Plug>MarkdownPreviewToggle
 
 if exists('$TMUX')
     nnoremap <C-h> :wincmd h<CR>

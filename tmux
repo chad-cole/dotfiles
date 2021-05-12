@@ -1,46 +1,34 @@
 #!/usr/bin/env bash
 
-WORK="~/work"
+newWindow() {
+    path=$1
+    name=$2
 
-createWindow() {
-    session=$1
-    window=$2
-    shift
-    shift
-    hasWindow=$(tmux list-windows -t $session | grep "$window")
-    if [ -z "$hasWindow" ]; then
-        cmd="tmux neww -t $session: -n $window -d"
-        if [ $# -gt 0 ]; then
-            cmd="$cmd $@"
-        fi
-        echo "Creating Window(\"$hasWindow\"): $cmd"
-        eval $cmd
-    fi
+    tmux_new_window_cmd="new-window -n $name \; \
+        send-keys \"cd $path && cls && nvim\" C-m \; \
+        split-window -p 20 -h \; \
+        send-keys \"cd $path && cls && dev up && dev server\" C-m \; \
+        split-window -p 90 -v \; \
+        send-keys \"cd $path && cls\" C-m \; \
+        split-window -p 50 -v \; \
+        send-keys \"cd $path && cls\" C-m \; "
+    echo $tmux_new_window_cmd
 }
 
-createSession() {
-    session=$1
-    window=$2
-    shift
-    shift
-    cmd="tmux new -s $session -d -n $window $@ > /dev/null 2>&1"
+tmux_session_create="tmux new-session -s Shop -d \; "
+tmux_session_create="$tmux_session_create $(newWindow ~/src/github.com/Shopify/pay Pay)"
+tmux_session_create="$tmux_session_create $(newWindow ~/src/github.com/Shopify/shop-accounts Accounts)"
+tmux_session_create="$tmux_session_create $(newWindow ~/src/github.com/Shopify/arrive-server Arrive)"
+tmux_session_create="$tmux_session_create kill-window -t 1 \; move-window -r"
 
-    echo "Creating Session: $cmd"
-    eval $cmd
-}
+tmux_tophat_session_create="tmux new-session -s Tophat -d \; "
+tmux_tophat_session_create="$tmux_tophat_session_create $(newWindow ~/src/github.com/Shopify/shop-charlinho Charlinho)"
+tmux_tophat_session_create="$tmux_tophat_session_create $(newWindow ~/src/github.com/shopifyus/cardserver Cardserver)"
+tmux_tophat_session_create="$tmux_tophat_session_create $(newWindow ~/src/github.com/shopifyus/cardsink Cardsink)"
+tmux_tophat_session_create="$tmux_tophat_session_create kill-window -t 1 \; move-window -r"
 
-while [ "$#" -gt 0 ]; do
-    curr=$1
-    shift
+#echo $tmux_session_create
+eval "$tmux_session_create"
+eval "$tmux_tophat_session_create"
 
-    case "$curr" in
-    "-w")
-        createSession work primary -c $WORK nvim
-        createWindow work shop -c $WORK/shop nvim
-        tmux split-window -t work:primary -p 35 -h
-        tmux split-window -t work:shop -p 35 -h
-        tmux attach -t work
-        ;;
-    *) echo "Unavailable command... $curr"
-    esac
-done
+tmux attach -t Shop:1

@@ -76,9 +76,13 @@ let g:netrw_banner=0
 let g:netrw_winsize = 25
 
 " Markdown
-let g:mkdp_auto_start = 1
+let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
-let g:mkdp_browser = 'Google Chrome'
+function! g:Open_browser(url)
+    silent exe 'silent !open -a "Google Chrome" ' . a:url
+endfunction
+let g:mkdp_browserfunc = 'g:Open_browser'
+
 
 " Airline
 let g:airline_powerline_fonts = 1
