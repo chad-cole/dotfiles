@@ -31,6 +31,11 @@ nmap <Tab> :bn<CR>
 nmap <S-Tab> :bp<CR>
 nmap <leader>q :bn\|bd #<CR>
 nmap <silent> <leader>c :let @* = expand("%")<cr>
+nmap <silent> <leader>w :let @* = expand("%")<cr>
+
+nnoremap <leader>w :w <CR>
+nnoremap <leader>x :x <CR>
+nnoremap <leader>n :exec 'w %:h/' . input("New File in Directory> ")<CR>
 nmap <leader>v <Plug>MarkdownPreviewToggle
 
 if exists('$TMUX')
@@ -52,3 +57,17 @@ else
     tnoremap <M-k> <C-\><C-N>:wincmd k<CR>
     tnoremap <M-l> <C-\><C-N>:wincmd l<CR>
 endif
+
+" This function creates a github url for the currently selected lines in
+" Visual Mode
+" `<leader> gh` will copy the url to your system clipboard
+" `<leader> ggh` will open a tab in chrome for the url
+fun! MakeGitHubURL(startline, endline)
+    let filename=expand('%')
+    let reporoot=finddir('.git/..', expand('%:p:h').';')
+    let reponame=fnamemodify(reporoot, ':t')
+    let branchname=trim(substitute(system("cat " . reporoot . "/.git/HEAD"), '^ref: refs\/heads\/', '', ''))
+    return 'https://github.com/Shopify/' . reponame . '/blob/' . branchname . '/' . filename . '#L' . a:startline . '-L' . a:endline
+endfun
+vnoremap <silent> gh :<C-U>let @* = MakeGitHubURL(line("'<"), line("'>"))<cr>
+vnoremap <silent> ggh :<C-U>silent exec "!open -a Google\\ Chrome " . escape(MakeGitHubURL(line("'<"), line("'>")), '#')<cr>
