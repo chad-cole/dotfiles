@@ -13,6 +13,11 @@ require'lspconfig'.sorbet.setup{
     on_attach=on_attach,
     cmd = {"bin/bundle", "exec", "srb", "tc", "--lsp"};
 }
+require'lspconfig'.graphql.setup{
+    on_attach=on_attach,
+    cmd = { "graphql-lsp", "server", "-m", "stream" },
+    filetypes = { "graphql" }
+}
 
 require('lspkind').init({
     -- with_text = true,

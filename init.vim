@@ -109,6 +109,9 @@ let NERDTreeMapUpdir='-'
 let NERDTreeMapOpenSplit='s'
 let NERDTreeMapOpenVSplit='v'
 
+" Startify
+let g:startify_change_to_dir = 0
+
 nnoremap <leader>ghw <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
 nnoremap <leader>u :UndotreeShow<CR>
@@ -161,7 +164,7 @@ augroup highlight_yank
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
 augroup END
 
-augroup THE_CHAD
+augroup setup
     autocmd!
     autocmd BufWritePre * %s/\s\+$//e
     autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}

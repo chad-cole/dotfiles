@@ -2,7 +2,7 @@ fun! TurnOnGuides()
     set rnu
     set nu
     set signcolumn=yes
-    set colorcolumn=80
+    set colorcolumn=120
 endfun
 
 fun! TurnOffGuides()
@@ -30,4 +30,9 @@ augroup TERMINAL_MINIMAL
     autocmd TermOpen * :call TurnOffGuides()
     autocmd TermOpen * nnoremap <buffer> <C-c> i<C-c>
     autocmd FocusGained,BufEnter,BufWinEnter,WinEnter term://* startinsert
+augroup END
+
+augroup GRAPHQL
+    au!
+    autocmd BufNewFile,BufRead,BufWinEnter,WinEnter *.graphql set ft=graphql
 augroup END

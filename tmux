@@ -7,7 +7,7 @@ newWindow() {
     tmux_new_window_cmd="new-window -n $name \; \
         send-keys \"cd $path && cls && nvim\" C-m \; \
         split-window -p 20 -h \; \
-        send-keys \"cd $path && cls && dev up && dev server\" C-m \; \
+        send-keys \"cd $path && cls && dev up\" C-m \; \
         split-window -p 90 -v \; \
         send-keys \"cd $path && cls\" C-m \; \
         split-window -p 50 -v \; \
@@ -23,8 +23,6 @@ tmux_session_create="$tmux_session_create kill-window -t 1 \; move-window -r"
 
 tmux_tophat_session_create="tmux new-session -s Tophat -d \; "
 tmux_tophat_session_create="$tmux_tophat_session_create $(newWindow ~/src/github.com/Shopify/shop-charlinho Charlinho)"
-tmux_tophat_session_create="$tmux_tophat_session_create $(newWindow ~/src/github.com/shopifyus/cardserver Cardserver)"
-tmux_tophat_session_create="$tmux_tophat_session_create $(newWindow ~/src/github.com/shopifyus/cardsink Cardsink)"
 tmux_tophat_session_create="$tmux_tophat_session_create kill-window -t 1 \; move-window -r"
 
 #echo $tmux_session_create

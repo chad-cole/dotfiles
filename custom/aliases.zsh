@@ -23,6 +23,7 @@ alias cls='clear'
 function gcm() { git commit -m "$*"; }
 alias gs='git status -sb'
 alias ga='git add'
+alias gf='git add . && git commit -m "f" && git rebase -i HEAD~3'
 alias gb='git branch'
 alias gbg='git branch | grep'
 alias gd='git diff'

@@ -18,3 +18,7 @@ source $(`echo brew --prefix`)/opt/asdf/asdf.sh
 plugins=(git vi-mode python osx brew virtualenv zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 export GPG_TTY=$(tty)
+
+[[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
+
+[ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
