@@ -1,36 +1,35 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 
 case "$(uname)" in
     Linux)
         # Install nvim nightly
-        sudo add-apt-repository ppa:neovim-ppa/unstable
-        sudo apt-get update
-        sudo apt-get install neovim
+        sudo add-apt-repository ppa:neovim-ppa/unstable && sudo apt-get update && sudo apt-get install neovim
         # Install grep dependency
         sudo apt-get install ripgrep
         # Install LSP's
         sudo gem install solargraph
         sudo npm install typescript-language-server
-        sudo pip install python-language-server
-        sudo apt-get install python3-pip ;;
+        sudo apt-get install python3-pip && sudo pip3 install python-language-server ;;
     Darwin)
         # Install nvim nightly
         brew install --HEAD neovim
         # Install grep dependency
         brew install ripgrep
-        brew install python
-        pip install python-language-server ;;
-    *)  exit
+        brew install python && pip install python-language-server ;;
+    *)  exit ;;
 esac
 
 mkdir -p ~/.config/nvim/plugin
 mkdir -p ~/.config/nvim/after/plugin
 mkdir -p ~/.config/nvim/lua
-mkdir -p ~/.config/nvim/lua/thechad
+mkdir -p ~/.config/nvim/lua/plugin
 
 ln -sf ~/dotfiles/tmux ~/tmux
 ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/Xresources ~/.Xresources
+
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 # link wholesale
 for f in `find . \( -name "*.vim" -o -name "*.lua" \)`; do
@@ -55,5 +54,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-
 git clone https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k --depth=1
 
 git config --global core.editor nvim
+git config --global user.name "Chad Cole"
 
+source $HOME/.zshrc
+
+nvim -c 'so %|PlugInstall' $HOME/.config/nvim/init.vim
 

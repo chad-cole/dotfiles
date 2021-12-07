@@ -1,18 +1,8 @@
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  autocmd VimEnter * TSInstall ruby --sync | source $MYVIMRC
-  autocmd VimEnter * TSInstall typescript --sync | source $MYVIMRC
-  autocmd VimEnter * TSInstall python --sync | source $MYVIMRC
-  autocmd VimEnter * TSInstall c --sync | source $MYVIMRC
-endif
-
 call plug#begin('~/.vim/plugged')
 
 " Plebvim lsp Plugins
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+Plug 'glepnir/lspsaga.nvim'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
 
@@ -25,6 +15,7 @@ Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 
 " Nice Plugins
+Plug 'windwp/nvim-autopairs'
 Plug 'gruvbox-community/gruvbox'
 Plug 'junegunn/gv.vim'
 Plug 'mbbill/undotree'
