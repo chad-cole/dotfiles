@@ -15,7 +15,7 @@ source ~/dotfiles/custom/p10k-theme
 
 source $(`echo brew --prefix`)/opt/asdf/asdf.sh
 
-plugins=(git vi-mode python osx brew virtualenv zsh-syntax-highlighting)
+plugins=(git vi-mode python macos brew virtualenv zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 export GPG_TTY=$(tty)
 

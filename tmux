@@ -9,8 +9,6 @@ newWindow() {
         split-window -p 20 -h \; \
         send-keys \"cd $path && cls && dev up\" C-m \; \
         split-window -p 90 -v \; \
-        send-keys \"cd $path && cls\" C-m \; \
-        split-window -p 50 -v \; \
         send-keys \"cd $path && cls\" C-m \; "
     echo $tmux_new_window_cmd
 }

@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 
+case "$(uname)" in
+    Linux)
+        # Install nvim nightly
+        sudo add-apt-repository ppa:neovim-ppa/unstable
+        sudo apt-get update
+        sudo apt-get install neovim
+        # Install grep dependency
+        sudo apt-get install ripgrep
+        # Install LSP's
+        sudo gem install solargraph
+        sudo npm install typescript-language-server ;;
+    Darwin)
+        # Install nvim nightly
+        brew install --HEAD neovim
+        # Install grep dependency
+        brew install ripgrep ;;
+    *)  exit
+esac
+
 mkdir -p ~/.config/nvim/plugin
 mkdir -p ~/.config/nvim/after/plugin
 mkdir -p ~/.config/nvim/lua
@@ -10,7 +29,7 @@ ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/Xresources ~/.Xresources
 
 # link wholesale
-for f in `find -E . -regex ".*\.vim$|.*\.lua$"`; do
+for f in `find . \( -name "*.vim" -o -name "*.lua" \)`; do
     rm -rf ~/.config/nvim/$f
     ln -s ~/dotfiles/$f ~/.config/nvim/$f
 done
@@ -22,7 +41,7 @@ if test -d ~/.oh-my-zsh; then
 fi
 git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 
-for f in `find -E . -regex ".*\.zsh$"`; do
+for f in `find . \( -name "*.zsh" \)`; do
     ln -sf ~/dotfiles/$f ~/.oh-my-zsh/$f
 done
 
@@ -32,3 +51,5 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-
 git clone https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k --depth=1
 
 git config --global core.editor nvim
+
+
