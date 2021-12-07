@@ -10,12 +10,16 @@ case "$(uname)" in
         sudo apt-get install ripgrep
         # Install LSP's
         sudo gem install solargraph
-        sudo npm install typescript-language-server ;;
+        sudo npm install typescript-language-server
+        sudo pip install python-language-server
+        sudo apt-get install python3-pip ;;
     Darwin)
         # Install nvim nightly
         brew install --HEAD neovim
         # Install grep dependency
-        brew install ripgrep ;;
+        brew install ripgrep
+        brew install python
+        pip install python-language-server ;;
     *)  exit
 esac
 
