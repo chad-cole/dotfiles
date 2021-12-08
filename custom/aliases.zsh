@@ -52,3 +52,9 @@ alias q=''
 
 # tmux
 alias stm='~/dotfiles/tmux'
+
+# Spin
+if [ "$SPIN" ]; then
+    alias sc='systemctl'
+    alias jc='journalctl'
+fi
