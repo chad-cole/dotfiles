@@ -1,4 +1,4 @@
-local saga = require 'lspsaga'
+-- local saga = require 'lspsaga'
 
 -- add your config value here
 -- default value
@@ -40,4 +40,4 @@ local saga = require 'lspsaga'
 --   your custom option here
 -- }
 
-saga.init_lsp_saga()
+-- saga.init_lsp_saga()

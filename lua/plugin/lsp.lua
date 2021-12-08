@@ -30,9 +30,9 @@ local servers = {
     -- 'pyls',
     -- 'gopls',
     -- 'graphql-lsp',
+    -- 'solargraph',
     'tsserver',
-    'sorbet',
-    'solargraph'
+    'sorbet'
 }
 
 for _, lsp in ipairs(servers) do
