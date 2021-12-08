@@ -1,9 +1,3 @@
-if [[ "$(uname)" == "Darwin" ]]; then
-    export PATH=$(`echo brew --prefix`)/bin:$(`echo brew --prefix`)sbin:$PATH
-    export PATH=$(`echo brew --prefix llvm`)/bin:$PATH
-    source $(`echo brew --prefix`)/opt/asdf/asdf.sh
-fi
-
 export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -20,8 +14,8 @@ plugins=(git vi-mode python macos brew virtualenv zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 export GPG_TTY=$(tty)
 
+[[ -f /opt/homebrew/bin/brew ]] export PATH=$(`echo brew --prefix`)/bin:$(`echo brew --prefix`)sbin:$PATH
+[[ -f /opt/homebrew/bin/brew ]] export PATH=$(`echo brew --prefix llvm`)/bin:$PATH
+[[ -f /opt/homebrew/bin/brew ]] source $(`echo brew --prefix`)/opt/asdf/asdf.sh
 [[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
-
-if [[ "$(uname)" == "Darwin" ]]; then
-    [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
-fi
+[ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
