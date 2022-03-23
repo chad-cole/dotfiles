@@ -27,8 +27,6 @@ endfun
 
 imap jk <Esc>
 tmap jk <Esc>
-nmap <Tab> :bn<CR>
-nmap <S-Tab> :bp<CR>
 nmap <leader>q :bn\|bd #<CR>
 nmap <silent> <leader>c :let @* = expand("%")<cr>
 nmap <silent> <leader>w :let @* = expand("%")<cr>
@@ -37,6 +35,10 @@ nnoremap <leader>w :w <CR>
 nnoremap <leader>x :x <CR>
 nnoremap <leader>n :exec 'w %:h/' . input("New File in Directory> ")<CR>
 nmap <leader>v <Plug>MarkdownPreviewToggle
+
+" Remap tab to quickfix next in normalmode
+nnoremap <Tab> :cn<CR>
+nnoremap <S-Tab> :cp<CR>
 
 if exists('$TMUX')
     nnoremap <C-h> :wincmd h<CR>
