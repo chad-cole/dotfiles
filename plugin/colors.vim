@@ -14,7 +14,7 @@ fun! ColorMyPencils()
         colorscheme gruvbox
     endif
 
-    highlight ColorColumn ctermbg=0 guibg=grey
+    highlight Normal ctermbg=NONE guibg=NONE
 endfun
 call ColorMyPencils()
 
