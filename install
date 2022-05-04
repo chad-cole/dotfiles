@@ -1,21 +1,11 @@
 #!/usr/bin/env bash
 
 if [ "$SPIN" ]; then
-    # Install nvim nightly
-    sudo add-apt-repository -y ppa:neovim-ppa/unstable && sudo apt-get update -y && sudo apt-get install -y neovim
-    # Install grep dependency
-    if ! command -v rg &> /dev/null; then
-      sudo apt-get install -y ripgrep
-    fi
     # Install LSP's
     sudo npm install typescript-language-server
-    sudo apt-get install -y python3-pip && sudo pip3 install python-language-server
+    sudo pip3 install python-language-server
 else
-    # Install nvim nightly
-    brew install --HEAD neovim
-    # Install grep dependency
-    brew install ripgrep
-    brew install python && pip install python-language-server
+    pip install python-language-server
 fi
 
 mkdir -p ~/.config/nvim/plugin
@@ -51,3 +41,5 @@ git clone https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/t
 
 git config --global core.editor nvim
 git config --global user.name 'Chad Cole'
+
+nvim --headless +PluginInstall +qa
