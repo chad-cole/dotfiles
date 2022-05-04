@@ -1,6 +1,11 @@
-- bat
-- ack
-- neovim
-- python
-- python3-pip
-- ripgrep
+repositories:
+  - ppa:neovim-ppa/unstable
+packages:
+  - bat
+  - ack
+  - python
+  - python-neovim
+  - python3-neovim
+  - python3-pip
+  - ripgrep
+  - neovim
