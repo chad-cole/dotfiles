@@ -9,3 +9,4 @@ packages:
   - python3-pip
   - ripgrep
   - neovim
+  - graphql-language-service-cli

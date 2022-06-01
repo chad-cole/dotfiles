@@ -29,8 +29,6 @@ require('lspkind').init({
 local servers = {
     -- 'pyls',
     -- 'gopls',
-    -- 'graphql-lsp',
-    -- 'solargraph',
     'tsserver',
     'sorbet'
 }
