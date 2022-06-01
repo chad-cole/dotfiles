@@ -42,4 +42,4 @@ git clone https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/t
 git config --global core.editor nvim
 git config --global user.name 'Chad Cole'
 
-nvim --headless +PluginInstall +qa
+nvim --headless +PlugInstall +qa

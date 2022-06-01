@@ -1,6 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all",
-  -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  ensure_installed = {  "c", "lua", "ruby", "python", "tsx", "typescript", "javascript", "latex", "bash", "css", "dot", "cmake", "graphql", "json", "vim", "yaml"},
   highlight = {
     enable = true,              -- false will disable the whole extension
     -- disable = { "c", "rust" },  -- list of language that will be disabled
