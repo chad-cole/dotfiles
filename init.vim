@@ -49,8 +49,7 @@ if has('nvim') || has('patch-8.0.902')
 else
   Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
 endif
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
 
 " Telescope requirements...
 Plug 'nvim-lua/popup.nvim'
@@ -84,18 +83,6 @@ function! g:Open_browser(url)
     silent exe 'silent !open -a "Google Chrome" ' . a:url
 endfunction
 let g:mkdp_browserfunc = 'g:Open_browser'
-
-
-" Airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme='gruvbox'
-
-if !exists('g:airline_symbols')
-   let g:airline_symbols = {}
-endif
-let g:airline_symbols.dirty=' '
-let g:airline_symbols.notexists = ' ∄'
-let g:airline_symbols.branch = ''
 
 " Signify
 let g:signify_sign_add = ''
