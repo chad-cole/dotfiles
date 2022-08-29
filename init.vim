@@ -19,6 +19,7 @@ Plug 'nvim-treesitter/playground'
 " Debugger Plugins
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
+Plug 'shopify/spin-hud'
 
 " Nice Plugins
 Plug 'windwp/nvim-autopairs'
