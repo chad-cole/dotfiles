@@ -44,4 +44,4 @@ git config --global user.name 'Chad Cole'
 
 source ~/.zshrc
 
-nvim --headless +PlugInstall +qa
+nvim --headless +PlugInstall +qall
