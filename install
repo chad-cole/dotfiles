@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 if [ "$SPIN" ]; then
-    # Install LSP's
     sudo npm install typescript-language-server
     sudo pip3 install python-language-server
+    sudo pip3 install neovim
 else
     pip install python-language-server
 fi
@@ -41,5 +41,7 @@ git clone https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/t
 
 git config --global core.editor nvim
 git config --global user.name 'Chad Cole'
+
+source ~/.zshrc
 
 nvim --headless +PlugInstall +qa

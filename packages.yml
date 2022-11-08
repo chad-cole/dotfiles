@@ -1,5 +1,3 @@
-repositories:
-  - ppa:neovim-ppa/unstable
 packages:
   - bat
   - ack
