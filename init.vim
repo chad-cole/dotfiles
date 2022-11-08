@@ -8,7 +8,6 @@ call plug#begin('~/.vim/plugged')
 
 " Plebvim lsp Plugins
 Plug 'neovim/nvim-lspconfig'
-Plug 'glepnir/lspsaga.nvim'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
 
@@ -19,7 +18,7 @@ Plug 'nvim-treesitter/playground'
 " Debugger Plugins
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
-Plug 'shopify/spin-hud'
+Plug 'Shopify/spin-hud'
 
 " Nice Plugins
 Plug 'windwp/nvim-autopairs'
@@ -41,7 +40,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'mhinz/vim-startify'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'Shopify/shadowenv.vim'
-Plug 'Shopify/vim-sorbet'
+Plug 'Shopify/vim-sorbet', { 'branch': 'main' }
 
 " Git Plugins
 Plug 'tpope/vim-fugitive'

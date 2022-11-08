@@ -40,5 +40,5 @@ for _, lsp in ipairs(servers) do
 end
 
 nvim_lsp['sorbet'].setup{
-    cmd = {"bin/bundle", "exec", "srb", "tc", "--lsp"};
+    cmd = {"srb", "tc", "--lsp"};
 }
