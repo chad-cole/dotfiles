@@ -1,28 +1,17 @@
 #!/usr/bin/env zsh
 
-if [ "$SPIN" ]; then
-    sudo npm install typescript-language-server
-    sudo pip3 install python-language-server
-    sudo pip3 install neovim
-else
-    pip install python-language-server
+cp -f ~/dotfiles/terminal/tmux.conf ~/.tmux.conf
+cp -f ~/dotfiles/terminal/zshrc ~/.zshrc
+
+# Neovim
+if [ ! $SPIN ]; then
+    brew install --HEAD neovim
 fi
 
-mkdir -p ~/.config/nvim/plugin
-mkdir -p ~/.config/nvim/after/plugin
-mkdir -p ~/.config/nvim/lua
-mkdir -p ~/.config/nvim/lua/plugin
+rm -rf ~/.config/nvim
+cp -r ~/dotfiles/nvim ~/.config/
 
-ln -sf ~/dotfiles/tmux ~/tmux
-ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -sf ~/dotfiles/zshrc ~/.zshrc
-ln -sf ~/dotfiles/Xresources ~/.Xresources
-
-# link wholesale
-for f in `find . \( -name "*.vim" -o -name "*.lua" \)`; do
-    rm -rf ~/.config/nvim/$f
-    ln -s ~/dotfiles/$f ~/.config/nvim/$f
-done
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 # zsh setup
 if test -d ~/.oh-my-zsh; then
@@ -30,18 +19,16 @@ if test -d ~/.oh-my-zsh; then
 fi
 git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 
-for f in `find . \( -name "*.zsh" \)`; do
-    ln -sf ~/dotfiles/$f ~/.oh-my-zsh/$f
-done
+mkdir -p $HOME/.oh-my-zsh/custom
+cp -r ~/dotfiles/terminal/custom/* ~/.oh-my-zsh/custom/
 
-mkdir -p $HOME/.oh-my-zsh/custom/themes
 mkdir -p $HOME/.oh-my-zsh/custom/plugins
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+mkdir -p $HOME/.oh-my-zsh/custom/themes
 git clone https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k --depth=1
+
+source $ZSH/oh-my-zsh.sh
 
 git config --global core.editor nvim
 git config --global user.name 'Chad Cole'
-
-source ~/.zshrc
-
-nvim --headless +PlugInstall +qall

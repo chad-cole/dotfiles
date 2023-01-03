@@ -1,0 +1,5 @@
+require("chadcole.packer")
+require("chadcole.set")
+require("chadcole.githubearl")
+require("chadcole.remap")
+require("chadcole.command")
