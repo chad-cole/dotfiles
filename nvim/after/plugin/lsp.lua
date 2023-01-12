@@ -13,6 +13,7 @@ lsp.ensure_installed({
 	'texlab',
 	'tsserver',
 	'yamlls',
+	'graphql',
 })
 
 lsp.on_attach(function(client, bufnr)
