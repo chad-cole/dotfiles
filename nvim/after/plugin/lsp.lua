@@ -5,6 +5,7 @@ lsp.preset('recommended')
 lsp.ensure_installed({
 	'bashls',
 	'eslint',
+	'graphql',
 	'marksman',
 	'rust_analyzer',
 	'solargraph',
@@ -13,7 +14,7 @@ lsp.ensure_installed({
 	'texlab',
 	'tsserver',
 	'yamlls',
-	'graphql',
+  'ltex',
 })
 
 lsp.on_attach(function(client, bufnr)
