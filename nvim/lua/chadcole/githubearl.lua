@@ -27,7 +27,7 @@ local function branch_name(file_path, use_primary)
 end
 
 function CopyGithubURL(use_primary)
-  local repo, path_uri = string.match(vim.fn.expand('%:p'), '.*github.com/(%w+/%w+)/(.*)')
+  local repo, path_uri = string.match(vim.fn.expand('%:p'), '.*github.com/([%w-]+/[%w-]+)/(.*)')
   local branch = branch_name(vim.fn.expand('%:h'), use_primary)
 
   if(not repo or not path_uri or not branch) then return end
@@ -40,6 +40,5 @@ function CopyGithubURL(use_primary)
     local csrow, _, cerow, _ = visual_selection_range()
     url = url .. '#L' .. csrow .. '-L' .. cerow
   end
-
-  vim.cmd(':let @+ = "' .. url .. '"')
+  vim.cmd(':let @* = "' .. url .. '"')
 end
