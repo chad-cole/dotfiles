@@ -10,11 +10,10 @@ lsp.ensure_installed({
 	'rust_analyzer',
 	'solargraph',
 	'sorbet',
-	'sumneko_lua',
+	'lua_ls',
 	'texlab',
 	'tsserver',
 	'yamlls',
-  'ltex',
 })
 
 lsp.on_attach(function(client, bufnr)
