@@ -1,4 +1,5 @@
 local lsp = require('lsp-zero')
+local cmp = require('cmp')
 
 lsp.preset('recommended')
 
@@ -27,6 +28,11 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 lsp.setup()
+cmp.setup({
+  mapping = {
+    ['<CR>'] = cmp.mapping.confirm({select = false}),
+  }
+})
 
 vim.diagnostic.config({
   virtual_text = true,
