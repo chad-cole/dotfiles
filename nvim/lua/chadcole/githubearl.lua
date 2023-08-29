@@ -40,5 +40,5 @@ function CopyGithubURL(use_primary)
     local csrow, _, cerow, _ = visual_selection_range()
     url = url .. '#L' .. csrow .. '-L' .. cerow
   end
-  vim.cmd(':let @* = "' .. url .. '"')
+  vim.cmd(':let @+ = "' .. url .. '"')
 end
