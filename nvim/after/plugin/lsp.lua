@@ -3,18 +3,42 @@ local cmp = require('cmp')
 
 lsp.preset('recommended')
 
-lsp.ensure_installed({
-	'bashls',
-	'eslint',
-	'graphql',
-	'marksman',
-	'rust_analyzer',
-	'solargraph',
-	'sorbet',
-	'lua_ls',
-	'texlab',
-	'tsserver',
-	'yamlls',
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {
+    'bashls',
+    'eslint',
+    'graphql',
+    'marksman',
+    'rust_analyzer',
+    'solargraph',
+    'sorbet',
+    'lua_ls',
+    'texlab',
+    'tsserver',
+    'yamlls',
+  },
+  handlers = {
+    lsp.default_setup,
+  },
+})
+
+local cmp_mappings = lsp.defaults.cmp_mappings({
+  ['<CR>'] = cmp.mapping.confirm({select = false}),
+})
+
+lsp.setup_nvim_cmp({
+  mapping = cmp_mappings
+})
+
+lsp.set_preferences({
+    suggest_lsp_servers = false,
+    sign_icons = {
+        error = 'E',
+        warn = 'W',
+        hint = 'H',
+        info = 'I'
+    }
 })
 
 lsp.on_attach(function(client, bufnr)
@@ -28,11 +52,6 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 lsp.setup()
-cmp.setup({
-  mapping = {
-    ['<CR>'] = cmp.mapping.confirm({select = false}),
-  }
-})
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -41,7 +60,7 @@ vim.diagnostic.config({
   underline = true,
   severity_sort = true,
   float = {
-    focusable = false,
+    focusable = true,
     style = 'minimal',
     border = 'rounded',
     source = 'always',
