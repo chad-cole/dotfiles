@@ -1,0 +1,56 @@
+# add the following to your ~/.gitconfig
+#
+# [include]
+# path = ~/.gitconfig.local
+
+[user]
+	name = Chad Cole
+	email = chad.cole@shopify.com
+
+[rebase]
+	autosquash = true
+
+[diff]
+	algorithm = patience
+
+[alias]
+  # detailed history from HEAD
+  audit = "log --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(yellow)%h %C(blue)%ad %C(red)%an%x09%C(reset)%s %C(green)%d'"
+  # recent commit messages from HEAD
+  messages = "!f() { git log --pretty=format:${1:-'%s'}; }; f"
+  # amend HEAD with staged files (append -a to also include unstaged files)
+  comma = "commit --amend --no-edit"
+  # fixup the provided hash
+  fix = "commit --fixup"
+  # print current branch
+  cb = "!f() { git rev-parse --abbrev-ref ${1:-HEAD}; }; f"
+  # (origin) main if it exists otherwise (origin) master
+  mom = "!f() { (git rev-parse --verify --quiet --abbrev-ref ${1:-origin}/main || git rev-parse --verify --quiet --abbrev-ref ${1:-origin}/master) | sed -e "s/^${1:-origin}[/]//"; }; f"
+  # checkout latest (origin) main or master (replaces mas/main)
+  comom = "!f() { BRANCH=$(git mom ${1:-origin}); git fetch ${1:-origin} ${BRANCH} && git branch -f main ${1:-origin}/${BRANCH} && git checkout ${BRANCH}; }; f"
+  # fetch (origin) and rebase (mom)
+  from = "!f() { git fetch ${2:-origin} --prune && git rebase ${2:-origin}/${1:-$(git mom ${2:-origin})}; }; f"
+  # fetch (origin), reset hard, and rebase (mom)
+  rr = "!f() { git fetch ${2:-origin} --prune && git reset --hard && git rebase ${2:-origin}/${1:-$(git mom ${2:-origin})}; }; f"
+  # fetch (origin), reset hard to upstream
+  ru = "!f() { git fetch ${1:-origin} --prune && git reset --hard ${1:-origin}/$(git cb); }; f"
+  # rebase (HEAD~1) onto (origin/mom) from (current branch)
+  rontom = "!f() { git rebase --onto ${2:-origin/$(git mom origin)} ${1:-head~1} ${3:-$(git cb)}; }; f"
+  # push new branch
+  pushnb = "!f() { git push ${2:-origin} --set-upstream ${1:-$(git cb)}; }; f"
+  # force push
+  pushf = "push --force-with-lease"
+  # force push to (origin)
+  pushfo = "!f() { git pushf ${1:-origin}; }; f"
+  # print merged local branches onto (origin)/(mom). exclude master, main, and current (prefixed with a *)
+  merged = "!f() { git branch --merged ${2:-origin}/${1:-$(git mom ${2:-origin})} | egrep -v '(^\\*|master|main)'; }; f"
+  # delete merged (to master) local branches
+  rm-merged = "!f() { git merged $1 | xargs git branch -d; }; f"
+  # print commit graph
+  graph = "log --graph --decorate --oneline --all --simplify-by-decoration"
+  # squash (branch)
+  squash = "!f(){ git reset --hard ${1} && git merge --squash HEAD@{1} && git commit --file .git/SQUASH_MSG; }; f"
+  # squash (n) commits
+  squashn = "!f(){ git reset --hard HEAD~${1} && git merge --squash HEAD@{1} && git commit --file .git/SQUASH_MSG; }; f"
+  sq = "!git squash"
+  sqn = "!git squashn"

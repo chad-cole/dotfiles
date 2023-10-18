@@ -14,7 +14,7 @@ if [ ! $SPIN ]; then
     brew install --HEAD neovim
 fi
 
-ln -fs ~/dotfiles/nvim ~/.config/nvim
+ln -sfn ~/dotfiles/nvim ~/.config/nvim
 
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
@@ -41,6 +41,9 @@ echo
 echo '> Configuring git'
 git config --global core.editor nvim
 git config --global user.name 'Chad Cole'
+
+ln -sf ~/dotfiles/terminal/.gitconfig.local ~/.gitconfig.local
+echo -e "[include]\n\tpath = ~/.gitconfig.local" >> ~/.gitconfig
 
 echo
 echo '> Finalizing 🔍'
