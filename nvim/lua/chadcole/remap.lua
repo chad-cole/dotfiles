@@ -50,4 +50,6 @@ end
 vim.keymap.set({"n", "v"}, "gh", function() CopyGithubURL() end)
 vim.keymap.set({"n", "v"}, "<leader>gh", function() CopyGithubURL(true) end)
 
+vim.keymap.set({"n", "v"}, "<leader>ti", function() TestIt() end)
+
 vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<CR>", { silent = true, noremap = true })
