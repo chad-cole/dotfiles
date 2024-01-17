@@ -71,9 +71,16 @@ return require('packer').startup(function(use)
         config = function()
             require('gitsigns').setup()
         end
-    }
+      }
+    use {
+        "folke/noice.nvim",
+        requires = {
+          "MunifTanjim/nui.nvim",
+          "rcarriga/nvim-notify",
+        }
+      }
 
-    if packer_bootstrap then
+      if packer_bootstrap then
         require('packer').sync()
-    end
-end)
+      end
+    end)
