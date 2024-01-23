@@ -12,8 +12,9 @@ require('mason-lspconfig').setup({
     'graphql',
     'marksman',
     'rust_analyzer',
-    'solargraph',
     'sorbet',
+    'solargraph',
+    'rubocop',
     'lua_ls',
     'texlab',
     'tsserver',
@@ -57,6 +58,7 @@ lsp.set_preferences({
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
 
+  vim.keymap.set("n", "fd", function() vim.lsp.buf.definition() end, opts)
   vim.keymap.set("n", "vd", function() vim.diagnostic.open_float() end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "vrr", function() vim.lsp.buf.references() end, opts)
