@@ -35,3 +35,7 @@ vim.opt.autochdir = false
 vim.opt.clipboard = 'unnamedplus'
 
 vim.cmd("let g:clipboard = { 'name': 'tmux', 'copy': { '+': ['pbcopy'], '*': ['tmux', 'loadb', '-'], }, 'paste': { '+': ['pbpaste'], '*': ['tmux', 'saveb', '-'], }, 'cache_enabled': 1 }")
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
