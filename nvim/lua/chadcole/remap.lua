@@ -65,3 +65,6 @@ vim.keymap.set('n', '<leader>og', function()
   vim.fn.setqflist(files)
   vim.cmd.copen()
 end, {})
+
+vim.keymap.set("n", "<Left>", "zc", { noremap = true })
+vim.keymap.set("n", "<Right>", "zo", { noremap = true })
