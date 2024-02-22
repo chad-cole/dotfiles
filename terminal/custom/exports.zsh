@@ -14,6 +14,9 @@ export SAVEHIST=10000
 # Make some commands not show up in history
 export HISTORY_IGNORE="ls:cd:cd -:pwd:exit:date:* --help"
 
+# Make some directories not show in telescope
+export RIPGREP_CONFIG_PATH=~/.config/ripgrep
+
 # colorful colors in iterm
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
