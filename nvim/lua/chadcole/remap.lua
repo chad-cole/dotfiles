@@ -36,8 +36,8 @@ vim.keymap.set("n", "<M-m>", ":vertical resize -5<CR>", { silent = true })
 vim.keymap.set("n", "<leader>c", ':let @* = expand("%")<CR>', { silent = true })
 vim.keymap.set("n", "<leader>cc", ':let @+ = expand("%")<CR>', { silent = true })
 
-vim.keymap.set("n", "<Tab>", ":cn<CR>")
-vim.keymap.set("n", "<S-Tab>", ":cp<CR>")
+vim.keymap.set("n", "<M-o>", ":cn<CR>", { silent = true })
+vim.keymap.set("n", "<M-i>", ":cp<CR>", { silent = true })
 
 if(not os.getenv('$TMUX'))
 then
