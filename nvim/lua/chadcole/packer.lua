@@ -71,12 +71,6 @@ return require('packer').startup(function(use)
             require('gitsigns').setup()
         end
       }
-    use {
-        "folke/noice.nvim",
-        requires = {
-          "MunifTanjim/nui.nvim",
-        }
-      }
 
       if packer_bootstrap then
         require('packer').sync()
