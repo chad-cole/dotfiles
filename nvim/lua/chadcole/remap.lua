@@ -5,9 +5,11 @@ vim.keymap.set("n", ";", ":")
 vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "<Down>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "<Up>", ":m '<-2<CR>gv=gv")
 
+vim.keymap.set("n", "<Down>", "J")
+vim.keymap.set("n", "<Up>", "mzi<CR><Esc>`z")
 vim.keymap.set("n", "J", "mzJ`z")
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
