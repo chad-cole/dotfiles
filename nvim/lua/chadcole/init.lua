@@ -1,6 +1,5 @@
 require("chadcole.packer")
 require("chadcole.set")
 require("chadcole.githubearl")
-require("chadcole.testit")
 require("chadcole.remap")
 require("chadcole.command")
