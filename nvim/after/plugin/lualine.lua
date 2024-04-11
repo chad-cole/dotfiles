@@ -20,7 +20,21 @@ require('lualine').setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
+    lualine_c = {
+      {
+        'filename',
+        file_status = true,      -- Displays file status (readonly status, modified status)
+        newfile_status = false,  -- Display new file status (new file means no write after created)
+        path = 4,                -- 4: Filename and parent dir, with tilde as the home directory
+        shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+        symbols = {
+          modified = '[+]',
+          readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+          unnamed = '[No Name]', -- Text to show for unnamed buffers.
+          newfile = '[New]',     -- Text to show for newly created file before first write
+        }
+      }
+    },
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}
