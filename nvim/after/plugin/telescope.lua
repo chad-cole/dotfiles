@@ -1,3 +1,17 @@
+require("telescope").setup {
+  pickers = {
+    buffers = {
+      show_all_buffers = true,
+      sort_lastused = true,
+      mappings = {
+        n = {
+          ["d"] = "delete_buffer",
+        }
+      }
+    }
+  }
+}
+
 local builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
@@ -16,5 +30,5 @@ vim.keymap.set('n', '<leader>fg', function()
   end
   p:close()
 
-  require('telescope.builtin').live_grep({ search_dirs = files })
+  builtin.live_grep({ search_dirs = files })
 end, {})
