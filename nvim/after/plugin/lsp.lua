@@ -13,7 +13,7 @@ require('mason-lspconfig').setup({
     'marksman',
     'rust_analyzer',
     'sorbet',
-    'ruby_ls',
+    'ruby_lsp',
     'lua_ls',
     'texlab',
     'tsserver',
