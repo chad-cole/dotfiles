@@ -68,3 +68,6 @@ end, {})
 
 vim.keymap.set("n", "<Left>", "zc", { noremap = true })
 vim.keymap.set("n", "<Right>", "zo", { noremap = true })
+
+-- oil.nvim
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
