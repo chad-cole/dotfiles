@@ -34,7 +34,6 @@ return require('packer').startup(function(use)
     use('tpope/vim-fugitive')
     use('alexghergh/nvim-tmux-navigation')
     use('braxtons12/blame_line.nvim')
-    use('Shopify/spin-hud')
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
