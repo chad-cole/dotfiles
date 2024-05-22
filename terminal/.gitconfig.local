@@ -19,7 +19,7 @@
   # recent commit messages from HEAD
   messages = "!f() { git log --pretty=format:${1:-'%s'}; }; f"
   # amend HEAD with staged files (append -a to also include unstaged files)
-  comma = "commit --amend --no-edit"
+  ca = "commit --amend --no-edit"
   # fixup the provided hash
   fix = "commit --fixup"
   # print current branch
