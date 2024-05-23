@@ -1,10 +1,14 @@
 function ColorMyPencils(color)
-	color = color or "melange"
-	vim.cmd.colorscheme(color)
+  color = color or "melange"
+  vim.cmd.colorscheme(color)
 
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+  vim.api.nvim_set_hl(0, "LineNr", { bg = "#867462", fg = "#18181a" })
+  vim.api.nvim_set_hl(0, "LineNrAbove", { bg = "#18181a", fg = "#867462" })
+  vim.api.nvim_set_hl(0, "LineNrBelow", { bg = "#18181a", fg = "#867462" })
+  vim.api.nvim_set_hl(0, "SignColumn", { bg = "#18181a" })
 end
 
 function SetColorColumnFromRubocop()
