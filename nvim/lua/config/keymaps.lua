@@ -1,3 +1,7 @@
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader>x", vim.cmd.wq)
 vim.keymap.set("n", ";", ":")
@@ -17,19 +21,19 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
-vim.keymap.set("x", "<leader>p", "\"_dP")
+vim.keymap.set("x", "<leader>p", '"_dP')
 
-vim.keymap.set("n", "<leader>y", "\"+y")
-vim.keymap.set("v", "<leader>y", "\"+y")
-vim.keymap.set("n", "<leader>Y", "\"+Y")
+vim.keymap.set("n", "<leader>y", '"+y')
+vim.keymap.set("v", "<leader>y", '"+y')
+vim.keymap.set("n", "<leader>Y", '"+Y')
 
-vim.keymap.set("n", "<leader>d", "\"_d")
-vim.keymap.set("v", "<leader>d", "\"_d")
+vim.keymap.set("n", "<leader>d", '"_d')
+vim.keymap.set("v", "<leader>d", '"_d')
 
 vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>f", function()
-    vim.lsp.buf.format()
+	vim.lsp.buf.format()
 end)
 
 vim.keymap.set("n", "<M-p>", ":vertical resize +5<CR>", { silent = true })
@@ -41,33 +45,19 @@ vim.keymap.set("n", "<leader>c", ':let @+ = expand("%")<CR>', { silent = true })
 vim.keymap.set("n", "<M-o>", ":cn<CR>", { silent = true })
 vim.keymap.set("n", "<M-i>", ":cp<CR>", { silent = true })
 
-if(not os.getenv('$TMUX'))
-then
-    vim.keymap.set("n", "<M-h>", ":wincmd h<CR>")
-    vim.keymap.set("n", "<M-j>", ":wincmd j<CR>")
-    vim.keymap.set("n", "<M-k>", ":wincmd k<CR>")
-    vim.keymap.set("n", "<M-l>", ":wincmd l<CR>")
+if not os.getenv("$TMUX") then
+	vim.keymap.set("n", "<M-h>", ":wincmd h<CR>")
+	vim.keymap.set("n", "<M-j>", ":wincmd j<CR>")
+	vim.keymap.set("n", "<M-k>", ":wincmd k<CR>")
+	vim.keymap.set("n", "<M-l>", ":wincmd l<CR>")
 end
 
-vim.keymap.set({"n", "v"}, "gh", function() CopyGithubURL() end)
-vim.keymap.set({"n", "v"}, "<leader>gh", function() CopyGithubURL(true) end)
-
-vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<CR>", { silent = true, noremap = true })
-
-vim.keymap.set('n', '<leader>og', function()
-  local p = io.popen('git diff --name-only main...; git diff --name-only; git ls-files --others --exclude-standard')
-  local files = {}
-  for file in p:lines() do
-    table.insert(files, file)
-  end
-  p:close()
-
-  vim.fn.setqflist(files)
-  vim.cmd.copen()
-end, {})
+vim.keymap.set({ "n", "v" }, "gh", function()
+	CopyGithubURL()
+end)
+vim.keymap.set({ "n", "v" }, "<leader>gh", function()
+	CopyGithubURL(true)
+end)
 
 vim.keymap.set("n", "<Left>", "zc", { noremap = true })
 vim.keymap.set("n", "<Right>", "zo", { noremap = true })
-
--- oil.nvim
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
