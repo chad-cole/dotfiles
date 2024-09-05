@@ -23,6 +23,9 @@ fi
 [ -f /opt/minidev/dev.sh ] && source /opt/minidev/dev.sh
 [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
 
+# OpenAI Tokens
+[[ -f ~/.openairc ]] && source ~/.openairc
+
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
