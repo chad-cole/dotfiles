@@ -15,6 +15,7 @@ return {
 				tsserver = {},
 				yamlls = {},
 			},
+			autoformat = false,
 		},
 	},
 	-- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
