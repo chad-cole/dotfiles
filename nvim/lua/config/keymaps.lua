@@ -12,10 +12,7 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("v", "<Down>", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "<Up>", ":m '<-2<CR>gv=gv")
 
-vim.keymap.set("n", "<Down>", "J")
-vim.keymap.set("n", "<Up>", "mzi<CR><Esc>`z")
 vim.keymap.set("n", "J", "mzJ`z")
-
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
@@ -46,10 +43,10 @@ vim.keymap.set("n", "<M-o>", ":cn<CR>", { silent = true })
 vim.keymap.set("n", "<M-i>", ":cp<CR>", { silent = true })
 
 if not os.getenv("$TMUX") then
-	vim.keymap.set("n", "<M-h>", ":wincmd h<CR>")
-	vim.keymap.set("n", "<M-j>", ":wincmd j<CR>")
-	vim.keymap.set("n", "<M-k>", ":wincmd k<CR>")
-	vim.keymap.set("n", "<M-l>", ":wincmd l<CR>")
+	vim.keymap.set("n", "<Left>", ":wincmd h<CR>", { silent = true })
+	vim.keymap.set("n", "<Down>", ":wincmd j<CR>", { silent = true })
+	vim.keymap.set("n", "<Up>", ":wincmd k<CR>", { silent = true })
+	vim.keymap.set("n", "<Right>", ":wincmd l<CR>", { silent = true })
 end
 
 vim.keymap.set({ "n", "v" }, "gh", function()
@@ -58,6 +55,3 @@ end)
 vim.keymap.set({ "n", "v" }, "<leader>gh", function()
 	CopyGithubURL(true)
 end)
-
-vim.keymap.set("n", "<Left>", "zc", { noremap = true })
-vim.keymap.set("n", "<Right>", "zo", { noremap = true })
