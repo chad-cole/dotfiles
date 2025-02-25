@@ -1,2 +1,5 @@
 .DS_Store
 nvim/plugin/packer_compiled.lua
+nvim/lazy-lock.json
+packages.yml
+startup.log
