@@ -10,35 +10,44 @@ end
 
 local function branch_name(file_path, use_primary)
   local branch = nil
-  if(file_path)
-  then
-    if use_primary
-    then
+  if file_path then
+    if use_primary then
       local cmd = "(cd " .. file_path .. " && git rev-parse --abbrev-ref origin/HEAD 2> /dev/null | tr -d '\n' )"
-      branch = string.match(vim.fn.system(cmd), 'origin/(%w+)')
+      branch = string.match(vim.fn.system(cmd), "origin/(%w+)")
     else
       branch = vim.fn.system("(cd " .. file_path .. " && git branch --show-current 2> /dev/null | tr -d '\n' )")
     end
   else
-      branch = vim.fn.system("git branch --show-current 2> /dev/null | tr -d '\n'")
+    branch = vim.fn.system("git branch --show-current 2> /dev/null | tr -d '\n'")
   end
 
   return ((branch ~= "") and branch) or nil
 end
 
 function CopyGithubURL(use_primary)
-  local repo, path_uri = string.match(vim.fn.expand('%:p'), '.*github.com/([%w-]+/[%w-]+)/(.*)')
-  local branch = branch_name(vim.fn.expand('%:h'), use_primary)
+  -- Try to match standard github.com repos first
+  local repo, path_uri = string.match(vim.fn.expand("%:p"), ".*github.com/([%w-]+/[%w-]+)/(.*)")
 
-  if(not repo or not path_uri or not branch) then return end
+  -- If not found, try to match Shop/world repo pattern
+  if not repo or not path_uri then
+    path_uri = string.match(vim.fn.expand("%:p"), ".*world/trees/root/src/(.*)")
+    if path_uri then
+      repo = "shop/world"
+    end
+  end
 
-  local url = 'https://github.com/' .. repo .. '/blob/' .. branch .. '/' .. path_uri
+  local branch = branch_name(vim.fn.expand("%:h"), use_primary)
 
-  if(vim.fn.mode() == 'V')
-  then
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', false, true, true), 'nx', false)
+  if not repo or not path_uri or not branch then
+    return
+  end
+
+  local url = "https://github.com/" .. repo .. "/blob/" .. branch .. "/" .. path_uri
+
+  if vim.fn.mode() == "V" then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", false, true, true), "nx", false)
     local csrow, _, cerow, _ = visual_selection_range()
-    url = url .. '#L' .. csrow .. '-L' .. cerow
+    url = url .. "#L" .. csrow .. "-L" .. cerow
   end
   vim.cmd(':let @+ = "' .. url .. '"')
 end
