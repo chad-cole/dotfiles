@@ -37,3 +37,8 @@ fi
 
 # cloudplatform: add Shopify clusters to your local kubernetes config
 export KUBECONFIG=${KUBECONFIG:+$KUBECONFIG:}/Users/chadcole/.kube/config:/Users/chadcole/.kube/config.shopify.cloudplatform
+for file in /Users/chadcole/src/github.com/Shopify/cloudplatform/workflow-utils/*.bash; do source ${file}; done
+kubectl-short-aliases
+
+# Added by tec agent
+[[ -x /Users/chadcole/.local/state/tec/profiles/base/current/global/init ]] && eval "$(/Users/chadcole/.local/state/tec/profiles/base/current/global/init zsh)"

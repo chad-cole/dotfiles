@@ -30,7 +30,7 @@ vim.keymap.set("v", "<leader>d", '"_d')
 vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>f", function()
-	vim.lsp.buf.format()
+  vim.lsp.buf.format()
 end)
 
 vim.keymap.set("n", "<M-p>", ":vertical resize +5<CR>", { silent = true })
@@ -42,16 +42,18 @@ vim.keymap.set("n", "<leader>c", ':let @+ = expand("%")<CR>', { silent = true })
 vim.keymap.set("n", "<M-o>", ":cn<CR>", { silent = true })
 vim.keymap.set("n", "<M-i>", ":cp<CR>", { silent = true })
 
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
 if not os.getenv("$TMUX") then
-	vim.keymap.set("n", "<Left>", ":wincmd h<CR>", { silent = true })
-	vim.keymap.set("n", "<Down>", ":wincmd j<CR>", { silent = true })
-	vim.keymap.set("n", "<Up>", ":wincmd k<CR>", { silent = true })
-	vim.keymap.set("n", "<Right>", ":wincmd l<CR>", { silent = true })
+  vim.keymap.set("n", "<M>h", ":wincmd h<CR>", { silent = true })
+  vim.keymap.set("n", "<M>j", ":wincmd j<CR>", { silent = true })
+  vim.keymap.set("n", "<M>k", ":wincmd k<CR>", { silent = true })
+  vim.keymap.set("n", "<M>l", ":wincmd l<CR>", { silent = true })
 end
 
 vim.keymap.set({ "n", "v" }, "gh", function()
-	CopyGithubURL()
+  CopyGithubURL()
 end)
 vim.keymap.set({ "n", "v" }, "<leader>gh", function()
-	CopyGithubURL(true)
+  CopyGithubURL(true)
 end)

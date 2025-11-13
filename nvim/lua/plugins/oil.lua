@@ -1,5 +1,6 @@
 return {
   "stevearc/oil.nvim",
+  lazy = false,
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
     {
@@ -12,6 +13,7 @@ return {
   },
   opts = {
     default_file_explorer = true,
+    skip_confirm_for_simple_edit = true,
     view_options = {
       show_hidden = true,
     },
