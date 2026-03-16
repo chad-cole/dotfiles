@@ -139,3 +139,4 @@ Tell Chad:
 5. **Draft PRs only.** Never push a PR as ready for review.
 6. **Use Graphite CLI (`gt`), not `gh pr create`.** Chad uses Graphite for stacking.
 7. **Commit messages include `Co-authored-by: AI`** when you made changes.
+8. **Re-evaluate the PR description after every change.** If the code changed, the description must be updated to match.
