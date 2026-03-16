@@ -3,6 +3,16 @@
 # Agents (pi skills & context)
 ln -sfn ~/dotfiles/agents ~/.agents
 
+# Pi extensions, agents, and prompts
+mkdir -p ~/.pi/agent/extensions ~/.pi/agent/agents ~/.pi/agent/prompts
+ln -sfn ~/dotfiles/pi/extensions/subagent ~/.pi/agent/extensions/subagent
+for f in ~/dotfiles/pi/agents/*.md; do
+  ln -sf "$f" ~/.pi/agent/agents/$(basename "$f")
+done
+for f in ~/dotfiles/pi/prompts/*.md; do
+  ln -sf "$f" ~/.pi/agent/prompts/$(basename "$f")
+done
+
 ln -sf ~/dotfiles/terminal/tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/terminal/zshrc ~/.zshrc
 ln -sf ~/dotfiles/terminal/rgconfig ~/.config/ripgrep
