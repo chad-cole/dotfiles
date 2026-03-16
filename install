@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Agents (pi skills & context)
+ln -sfn ~/dotfiles/agents ~/.agents
+
 ln -sf ~/dotfiles/terminal/tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/terminal/zshrc ~/.zshrc
 ln -sf ~/dotfiles/terminal/rgconfig ~/.config/ripgrep
