@@ -126,6 +126,10 @@ Tell Chad:
 - Any fixes you made
 - Any questions you have
 
+## Files to Never Commit
+
+- `db/data/verdict/flags.yml` — verdict flags are updated automatically, never push local changes
+
 ## Important Rules
 
 1. **Always operate on `.` (current directory) and current branch only.** Never switch branches.
