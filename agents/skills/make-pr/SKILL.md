@@ -75,6 +75,10 @@ Format:
 
 {Brief description of the approach. Bullet points for multiple changes.}
 
+## Tophat
+
+{Steps for a reviewer to manually verify the change. Be specific — what to click, what URL to visit, what command to run, what to expect. If it's a backend-only change, describe how to verify via console, API call, or test.}
+
 ## Notes
 
 {Optional: anything a reviewer should know — risk, follow-ups, decisions made.}
@@ -92,6 +96,8 @@ Format:
 - Mention if something is behind a flag
 
 If you don't know why the change was made, **ask Chad**.
+
+If you don't know how to tophat the change, **ask Chad**. Don't make up verification steps you're not sure about.
 
 ### Step 6: Push via Graphite
 
