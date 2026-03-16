@@ -16,6 +16,7 @@
 - Main rollout flag: `f_eligible_for_shop_feature_canary_rollout` (currently at 50%, rolling_out)
   - Dashboard: https://experiments.shopify.io/flags/f_eligible_for_shop_feature_canary_rollout
   - Product: Shopify Forms (product_id: 91)
+  - Vault project: 48192
   - Vault team: Shop Identity (16742)
 - Key code: `areas/core/shopify/components/shop_identity/app/models/graph_api/admin/shop_features.rb`
 
