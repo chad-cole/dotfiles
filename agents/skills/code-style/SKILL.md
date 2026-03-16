@@ -302,143 +302,48 @@ assert_predicate(result, :error?)
 
 ---
 
-## Critiques & Corrections (things to do BETTER when writing code together)
+## Improvements (things to be mindful of when writing code together)
 
-These are patterns observed in Chad's code that we should actively improve on. When writing new code, follow these corrections. When touching existing code with these issues, fix them opportunistically.
+Don't sweat the small stuff — these are structural patterns to watch for, not a nitpick checklist. Follow Chad's style first, then apply these when they meaningfully improve the code.
 
-### 1. Typos in method names ship to production
-`becomess_vitess_access_policy` — double "s" — exists in TWO files and is part of a public interface. Spell-check method names. When we write code together, **re-read every method name before committing.**
-
-### 2. God methods with too many keyword arguments
-`backfill_missing_info` takes 12 keyword arguments. This is a code smell — it's doing too many things and the call sites are unwieldy:
+### 1. Methods with too many keyword arguments
+`backfill_missing_info` takes 12 keyword arguments. When a method accumulates that many params, it's usually doing too many things. Group related params into value objects:
 
 ```ruby
-# BAD — 12 kwargs, impossible to read at the call site
-def backfill_missing_info(customer:, api_client:, ip:, user_agent:, referer:, first_name: nil, last_name: nil, avatar_url: nil, tags: nil, addresses: nil, default_address: nil, phone_number: nil, overwrite: false)
-```
-
-**Fix:** Extract a parameter object or split into focused methods. Group related params (request context is already extracted — do the same for personal info, contact info, etc.):
-
-```ruby
-# BETTER — compose from focused operations
+# When kwargs exceed ~5, consider extracting
 PersonalInfo = Data.define(:first_name, :last_name, :avatar_url)
 ContactInfo = Data.define(:phone_number, :addresses, :default_address)
 
 def backfill(customer:, personal_info:, contact_info:, request_context:, overwrite: false)
 ```
 
-### 3. Reaching deep into result objects repeatedly
-`result.ok_value.encrypted_transport_token`, `result.ok_value.consented_scopes`, `result.ok_value.first_name`, etc. — the same `result.ok_value` is dereferenced 6+ times in a single method. This is fragile and noisy.
-
-**Fix:** Destructure once at the top:
+### 2. Destructure result objects once
+When accessing `result.ok_value.thing` more than 2-3 times, assign it once:
 
 ```ruby
-# BAD
-customer = find_customer(result.ok_value.email, result.ok_value.first_name, result.ok_value.last_name)
-@redirect_uri = build_uri(result.ok_value.encrypted_transport_token, result.ok_value.consented_scopes)
-
-# BETTER
+# Instead of result.ok_value.x, result.ok_value.y, result.ok_value.z...
 value = result.ok_value
 customer = find_customer(value.email, value.first_name, value.last_name)
 @redirect_uri = build_uri(value.encrypted_transport_token, value.consented_scopes)
 ```
 
-### 4. Ternary abuse for nil-checking
-```ruby
-phone: id_token.phone && id_token.phone_verified ? id_token.phone : nil
-```
-This is hard to read and the precedence is ambiguous without knowing Ruby's rules. Prefer a guard or `then`:
+### 3. Extract large controller orchestration to service objects
+When a controller action exceeds ~20 lines of orchestration (creating objects, calling services, mapping errors, building responses), pull it into a service:
 
 ```ruby
-# BETTER
-phone: (id_token.phone if id_token.phone_verified)
-```
-
-### 5. Inconsistent error mapping patterns
-`map_backfill_errors_to_shop_scope_errors` uses string interpolation to build a case key (`"#{k}:#{code}"`), then matches it. This is brittle — if the error structure changes, the string matching silently breaks. Also, `errors.to_set.join(" ")` on an array that may contain `nil` from the `next unless` is risky.
-
-**Fix:** Use structured matching, compact nils:
-
-```ruby
-# BETTER
-def map_backfill_errors_to_shop_scope_errors(backfill_errors)
-  return unless backfill_errors
-
-  backfill_errors.to_hash.filter_map { |field, violations|
-    code = violations&.first&.dig(:code)&.serialize
-    next unless code
-
-    map_error_code(field, code)
-  }.uniq.join(" ").presence
-end
-
-def map_error_code(field, code)
-  case [field, code]
-  in [:phone_number, "taken"] then "phone:taken"
-  else "unknown_error"
-  end
-end
-```
-
-### 6. Tests that setup too much and assert too little
-Some tests build elaborate fixtures, mock multiple collaborators, and then only assert one thing (or assert things that aren't related to what was set up). The phone verification test creates a full IdToken, mocks ExchangeCode and IdToken.decode, then only checks `assert_nil actual.phone` — and has a dangling unused `decrypted` variable.
-
-**Fix:** If you only care about one field, minimize setup. Remove dead code from tests. Every line should serve the assertion:
-
-```ruby
-# BAD — unused variable, excessive setup
-actual = @sut.perform(host:, client:, code:, state:).ok_value
-decrypted = T.must(TransportToken.decrypt(actual.encrypted_transport_token))  # never used
-assert_nil actual.phone
-
-# BETTER — remove the dead line
-result = @sut.perform(host:, client:, code:, state:)
-assert_nil result.ok_value.phone
-```
-
-### 7. Mixed typing styles in the same file
-Some files mix `sig { ... }` blocks with `#:` RBS comments. Pick one per file and stick with it. When writing NEW files, always use `#:`. When editing existing files, match the dominant style unless doing a deliberate migration.
-
-### 8. `T.must` when `.not_nil!` is preferred
-Per Shopify conventions, never use `T.must` — use `.not_nil!` instead. Some existing code still uses `T.must` (e.g., in `value_matches_definition_type`). In new code, always use `.not_nil!`.
-
-### 9. Controller actions that do too much inline
-The `shop_callback_controller#callback` method has a ~60 line action that creates customers, backfills info, stores mappings, builds redirect URIs, maps errors, and subscribes to email marketing — all inline. Even though individual pieces are extracted to helpers, the orchestration itself is hard to follow.
-
-**Fix:** Extract the callback into a service object that returns a result, then the controller just renders based on the result:
-
-```ruby
-# BETTER — controller is just routing
 def callback
   result = ShopCallbackService.new(shop:, request:, state:).perform
   result.ok? ? redirect_to(result.redirect_uri) : render_error(result.error)
 end
 ```
 
-### 10. Magic strings for error codes
-`"phone:taken"`, `"unknown_error"` — these are stringly-typed. If the consumer on the other side checks for `"phone:taken"`, a typo is a silent bug.
-
-**Fix:** Define constants or an enum:
-
-```ruby
-module ShopScopeErrors
-  PHONE_TAKEN = "phone:taken"
-  UNKNOWN = "unknown_error"
-end
-```
-
-### 11. Commit message discipline
-Commit messages like `"more stuff"`, `"wip"`, `"Fixes task and test"` provide zero context for future archaeology. Even for intermediate commits that get squashed, write messages that explain *why*. The PR merge commits are better — keep that quality for all commits.
+### 4. Commit messages
+Intermediate commits that get squashed are fine as shorthand, but standalone commits should explain *why*, not just *what*. When we write commits together, they will always be descriptive.
 
 ### Summary: When we write code together, we will:
-1. **Spell-check all names** before committing
-2. **Cap keyword arguments at ~5** — extract objects beyond that
-3. **Destructure results once** instead of repeated deep access
-4. **Prefer `if`/`unless` modifiers** over ternaries for nil-checks
-5. **Use structured matching** (arrays/pattern matching) over string interpolation for dispatch
-6. **Remove dead code from tests** — every line serves an assertion
-7. **One typing style per file** — `#:` for new files
-8. **`.not_nil!`** never `T.must`
-9. **Extract orchestration to service objects** when controller actions exceed ~20 lines
-10. **Define constants for stringly-typed identifiers**
-11. **Write meaningful commit messages** even for intermediate commits
+1. **Keep keyword argument lists manageable** — extract value objects when they grow
+2. **Destructure results once** instead of repeated deep access
+3. **Extract orchestration to service objects** when controller actions get long
+4. **Write meaningful commit messages**
+5. **`.not_nil!`** never `T.must`
+6. **`#:` RBS comments** for new files, match existing style when editing
