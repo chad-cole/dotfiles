@@ -7,6 +7,12 @@
 - **Group**: Shop Identity (5 years)
 - **Vault profile**: https://vault.shopify.io/users/15066
 
+## Current Projects
+
+### Lead Capture (active - release phase)
+- In release phase: focus is on flag toggling, rollout, and last-minute fixes
+- Flags will typically be prefixed with `f_lead_capture_`
+
 ## Preferences
 
 - Subject type for flags/experiments: `shop` (unless specified otherwise)
