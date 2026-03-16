@@ -11,3 +11,4 @@
 
 - Subject type for flags/experiments: `shop` (unless specified otherwise)
 - Default team_id for flags/experiments: 16743
+- When creating git commits, always append `Co-authored-by: AI` as a trailer in the commit message body (blank line after the main message, then the trailer)
