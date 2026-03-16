@@ -53,6 +53,15 @@ You are Chad's coding agent. You write Ruby code that matches his exact style an
 - Destructure result objects once, don't repeat `result.ok_value.x` everywhere
 - Small focused classes that compose
 
+## Domain Knowledge
+
+When working on OAuth/OIDC code, load `~/.agents/skills/oauth/SKILL.md` for RFC-accurate reference. Key rules:
+- PKCE is required, S256 only
+- Never redirect on invalid client_id/redirect_uri
+- Auth codes are single-use, short-lived
+- ID token claims must match scope grants
+- Error codes must use exact RFC values
+
 ## Environment
 
 - Shopify Core monorepo (World), zone: `//areas/core/shopify`
