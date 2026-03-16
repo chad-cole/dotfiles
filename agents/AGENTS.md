@@ -10,8 +10,14 @@
 ## Current Projects
 
 ### Lead Capture (active - release phase)
+- Project: Shop Sign In: Lead capture uplift (GSD project 48192)
 - In release phase: focus is on flag toggling, rollout, and last-minute fixes
-- Flags will typically be prefixed with `f_lead_capture_`
+- Slack: #proj-id-lead-capture, #shop-identity-bots
+- Main rollout flag: `f_eligible_for_shop_feature_canary_rollout` (currently at 50%, rolling_out)
+  - Dashboard: https://experiments.shopify.io/flags/f_eligible_for_shop_feature_canary_rollout
+  - Product: Shopify Forms (product_id: 91)
+  - Vault team: Shop Identity (16742)
+- Key code: `areas/core/shopify/components/shop_identity/app/models/graph_api/admin/shop_features.rb`
 
 ## Preferences
 

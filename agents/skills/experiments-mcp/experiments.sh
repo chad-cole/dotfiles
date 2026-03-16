@@ -46,12 +46,15 @@ while [[ $# -gt 0 ]]; do
       VALUE="$2"
       shift 2
 
-      # Detect booleans, integers, arrays, and objects; otherwise treat as string
+      # Known integer parameters
+      INTEGER_KEYS="team_id champion_id project_id page percentile follow_up_days"
+
+      # Detect booleans, known integer params, arrays/objects; otherwise treat as string
       if [[ "$VALUE" == "true" ]]; then
         ARGS=$(echo "$ARGS" | python3 -c "import sys,json; d=json.load(sys.stdin); d['$KEY']=True; print(json.dumps(d))")
       elif [[ "$VALUE" == "false" ]]; then
         ARGS=$(echo "$ARGS" | python3 -c "import sys,json; d=json.load(sys.stdin); d['$KEY']=False; print(json.dumps(d))")
-      elif [[ "$VALUE" =~ ^-?[0-9]+$ ]]; then
+      elif [[ "$VALUE" =~ ^-?[0-9]+$ ]] && [[ " $INTEGER_KEYS " == *" $KEY "* ]]; then
         ARGS=$(echo "$ARGS" | python3 -c "import sys,json; d=json.load(sys.stdin); d['$KEY']=$VALUE; print(json.dumps(d))")
       elif [[ "$VALUE" == \[* || "$VALUE" == \{* ]]; then
         ARGS=$(echo "$ARGS" | python3 -c "import sys,json; d=json.load(sys.stdin); d['$KEY']=json.loads('$VALUE'); print(json.dumps(d))")
