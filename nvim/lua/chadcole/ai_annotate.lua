@@ -28,6 +28,13 @@ local function resolve_file_path(bufname)
   return bufname, "file"
 end
 
+-- Detect if we're in a PR review worktree, return PR number or nil
+local function detect_pr()
+  local cwd = vim.fn.getcwd()
+  local pr = cwd:match("/reviews/pr%-(%d+)")
+  return pr
+end
+
 local function get_visual_selection()
   -- Get the visual selection range and text
   local start_pos = vim.fn.getpos("'<")
@@ -84,7 +91,13 @@ function M.collect()
   end
 
   local cwd = vim.fn.getcwd()
-  local lines = { "# Batched Change Requests", "" }
+  local pr = detect_pr()
+  local lines
+  if pr then
+    lines = { "# PR Review: shop/world#" .. pr, "" }
+  else
+    lines = { "# Batched Change Requests", "" }
+  end
 
   for i, a in ipairs(M.annotations) do
     -- Make path relative to cwd

@@ -17,6 +17,9 @@ source ~/dotfiles/terminal/custom/p10k-theme
    export EDITOR='nvim'
  fi
 
+# Custom scripts
+export PATH="$HOME/dotfiles/bin:$PATH"
+
 plugins=(git vi-mode python macos brew virtualenv zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 export GPG_TTY=$(tty)
@@ -32,3 +35,6 @@ export GPG_TTY=$(tty)
 
 # Added by tec agent
 [[ -x /Users/chadcole/.local/state/tec/profiles/base/current/global/init ]] && eval "$(/Users/chadcole/.local/state/tec/profiles/base/current/global/init zsh)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

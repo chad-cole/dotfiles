@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# pr-clean — remove review worktrees
+# Usage: pr-clean [pr_number]   (no args = clean all)
+
+set -euo pipefail
+
+WORLD_GIT="$HOME/world/git"
+REVIEW_BASE="$HOME/world/trees/reviews"
+
+if [[ $# -eq 1 ]]; then
+  path="$REVIEW_BASE/pr-$1"
+  if [[ ! -d "$path" ]]; then
+    echo "No worktree for PR #$1" >&2
+    exit 1
+  fi
+  git --git-dir="$WORLD_GIT" worktree remove "$path" --force
+  echo "Removed worktree for PR #$1"
+else
+  count=0
+  for path in "$REVIEW_BASE"/pr-*; do
+    [[ -d "$path" ]] || continue
+    pr=$(basename "$path" | sed 's/pr-//')
+    git --git-dir="$WORLD_GIT" worktree remove "$path" --force 2>/dev/null && echo "Removed PR #$pr" && ((count++)) || true
+  done
+  if [[ $count -eq 0 ]]; then
+    echo "No review worktrees to clean up"
+  else
+    echo "Cleaned up $count worktree(s)"
+  fi
+fi

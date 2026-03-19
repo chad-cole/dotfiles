@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# pr-review — check out a PR in a sparse worktree for review
+# Usage: pr-review [repo] <pr_number>
+#   pr-review 12345              → defaults to shop/world
+#   pr-review shop/world 12345
+#   pr-review https://github.com/shop/world/pull/12345
+
+set -euo pipefail
+
+WORLD_GIT="$HOME/world/git"
+REVIEW_BASE="$HOME/world/trees/reviews"
+
+# Parse args
+if [[ $# -eq 1 ]]; then
+  if [[ "$1" =~ github\.com/([^/]+/[^/]+)/pull/([0-9]+) ]]; then
+    REPO="${BASH_REMATCH[1]}"
+    PR="${BASH_REMATCH[2]}"
+  elif [[ "$1" =~ ^[0-9]+$ ]]; then
+    REPO="shop/world"
+    PR="$1"
+  else
+    echo "Usage: pr-review [repo] <pr_number>" >&2
+    exit 1
+  fi
+elif [[ $# -eq 2 ]]; then
+  REPO="$1"
+  PR="$2"
+else
+  echo "Usage: pr-review [repo] <pr_number>" >&2
+  exit 1
+fi
+
+# Get PR info
+echo "Looking up PR #$PR on $REPO..."
+PR_INFO=$(gh pr view "$PR" --repo "$REPO" --json headRefName,baseRefName,title)
+BRANCH=$(echo "$PR_INFO" | jq -r '.headRefName')
+BASE=$(echo "$PR_INFO" | jq -r '.baseRefName')
+TITLE=$(echo "$PR_INFO" | jq -r '.title')
+
+echo "PR #$PR: $TITLE"
+echo "Branch: $BRANCH (base: $BASE)"
+
+WORKTREE_PATH="$REVIEW_BASE/pr-$PR"
+
+# If worktree already exists, just cd into it
+if [[ -d "$WORKTREE_PATH" ]]; then
+  echo "Worktree already exists at $WORKTREE_PATH"
+  echo "Opening diffview..."
+  cd "$WORKTREE_PATH"
+  MERGE_BASE=$(git merge-base "origin/$BASE" HEAD 2>/dev/null || echo "origin/$BASE")
+  exec nvim -c "DiffviewOpen ${MERGE_BASE}..HEAD"
+fi
+
+# Fetch the branch and base
+echo "Fetching $BRANCH and $BASE..."
+git --git-dir="$WORLD_GIT" fetch origin "$BRANCH" "$BASE"
+
+# Create worktree with no checkout first (to avoid checking out 1.1M files)
+mkdir -p "$REVIEW_BASE"
+git --git-dir="$WORLD_GIT" worktree add --no-checkout "$WORKTREE_PATH" "origin/$BRANCH" --detach
+cd "$WORKTREE_PATH"
+
+# Set up sparse checkout with only the zones touched by the PR
+echo "Configuring sparse checkout..."
+git sparse-checkout init --cone
+git sparse-checkout set .meta
+
+# Get the files changed in the PR and extract zone paths
+MERGE_BASE=$(git merge-base "origin/$BASE" HEAD)
+CHANGED_DIRS=$(git diff --name-only "$MERGE_BASE"..HEAD | sed 's|/[^/]*$||' | sort -u)
+
+# Extract top-level zone-ish paths (first 3 path components or until we find a zone.nix)
+ZONES=()
+for dir in $CHANGED_DIRS; do
+  # Walk up to find the zone root (contains zone.nix in git)
+  check="$dir"
+  while [[ -n "$check" ]]; do
+    if git cat-file -e "HEAD:${check}/zone.nix" 2>/dev/null; then
+      ZONES+=("$check")
+      break
+    fi
+    parent="${check%/*}"
+    if [[ "$parent" == "$check" ]]; then
+      break
+    fi
+    check="$parent"
+  done
+done
+
+# Deduplicate
+UNIQUE_ZONES=($(printf '%s\n' "${ZONES[@]}" | sort -u))
+
+if [[ ${#UNIQUE_ZONES[@]} -gt 0 ]]; then
+  echo "Checking out zones: ${UNIQUE_ZONES[*]}"
+  git sparse-checkout set .meta "${UNIQUE_ZONES[@]}"
+else
+  echo "No zones detected, checking out changed directories..."
+  TOP_DIRS=($(echo "$CHANGED_DIRS" | cut -d/ -f1-3 | sort -u))
+  git sparse-checkout set .meta "${TOP_DIRS[@]}"
+fi
+
+# Checkout the actual files
+git checkout
+
+echo ""
+echo "Worktree ready at $WORKTREE_PATH"
+echo "Opening diffview..."
+exec nvim -c "DiffviewOpen ${MERGE_BASE}..HEAD"
